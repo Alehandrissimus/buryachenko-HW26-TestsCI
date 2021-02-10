@@ -11,7 +11,7 @@ import com.example.buryachenko_hw22_arch.domain.StandardUserPostModel
 import kotlinx.android.synthetic.main.recycleview_bannedpost.view.*
 import kotlinx.android.synthetic.main.recycleview_standardpost.view.*
 
-class PostRVAdapter(private val items: List<PostModel>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PostRVAdapter(private val items: List<PostUIModel>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     enum class ViewType {
         STANDARD,
@@ -20,8 +20,8 @@ class PostRVAdapter(private val items: List<PostModel>): RecyclerView.Adapter<Re
 
     override fun getItemViewType(position: Int): Int {
         return when(items[position]) {
-            is StandardUserPostModel -> ViewType.STANDARD
-            is BannedUserPostModel -> ViewType.BANNED
+            is StandardPostUIModel -> ViewType.STANDARD
+            is BannedPostUIModel -> ViewType.BANNED
             else -> throw IllegalArgumentException()
         }.ordinal
     }
@@ -42,9 +42,9 @@ class PostRVAdapter(private val items: List<PostModel>): RecyclerView.Adapter<Re
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is PostStandardVH) {
-            holder.bind(items[position] as StandardUserPostModel)
+            holder.bind(items[position] as StandardPostUIModel)
         } else if (holder is PostBannedVH) {
-            holder.bind(items[position] as BannedUserPostModel)
+            holder.bind(items[position] as BannedPostUIModel)
         }
     }
 
@@ -53,7 +53,7 @@ class PostRVAdapter(private val items: List<PostModel>): RecyclerView.Adapter<Re
 }
 
 class PostStandardVH(view: View) : RecyclerView.ViewHolder(view) {
-    fun bind(userPost: StandardUserPostModel) {
+    fun bind(userPost: StandardPostUIModel) {
         itemView.recycleStandardTextTitle.text = userPost.title
         itemView.recycleStandardTextUser.text = userPost.userId
         itemView.recycleStandardTextBody.text = userPost.body
@@ -62,7 +62,7 @@ class PostStandardVH(view: View) : RecyclerView.ViewHolder(view) {
 }
 
 class PostBannedVH(view: View) : RecyclerView.ViewHolder(view) {
-    fun bind(post: BannedUserPostModel) {
+    fun bind(post: BannedPostUIModel) {
         itemView.recycleBannedText.text = post.userId
     }
 }

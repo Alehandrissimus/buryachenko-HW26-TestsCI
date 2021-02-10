@@ -10,6 +10,7 @@ import com.example.buryachenko_hw22_arch.present.PostPresenter
 import com.example.buryachenko_hw22_arch.present.PostRVAdapter
 import com.example.buryachenko_hw22_arch.present.PostView
 import com.example.buryachenko_hw22_arch.data.PostComponent
+import com.example.buryachenko_hw22_arch.present.PostUIModel
 import kotlinx.android.synthetic.main.activity_posts.*
 
 class PostActivity : AppCompatActivity(), PostView {
@@ -33,11 +34,11 @@ class PostActivity : AppCompatActivity(), PostView {
         titleTextView.text = error
     }
 
-    override fun setupPostList(list: List<PostModel>) {
+    override fun setupPostList(list: List<PostUIModel>) {
         setupRecycleView(list)
     }
 
-    private fun setupRecycleView(list: List<PostModel>) {
+    private fun setupRecycleView(list: List<PostUIModel>) {
         postsRecycleView.adapter = PostRVAdapter(list)
         postsRecycleView.layoutManager =
             LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)

@@ -1,10 +1,11 @@
-package com.example.buryachenko_hw22_arch.tools
+package com.example.buryachenko_hw22_arch.data
 
 import android.content.Context
-import com.example.buryachenko_hw22_arch.data.PostRepository
 import com.example.buryachenko_hw22_arch.domain.PostMapper
+import com.example.buryachenko_hw22_arch.domain.UsersStatusedStorage
 import com.example.buryachenko_hw22_arch.present.PostPresenter
-import com.example.buryachenko_hw22_arch.present.PostUIMapper
+import com.example.buryachenko_hw22_arch.present.ResourceRepository
+import com.example.buryachenko_hw22_arch.tools.Multithreading
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -14,20 +15,20 @@ object PostComponent {
         return PostPresenter(
             postRepository = PostRepository(
                 multithreading = Multithreading(context),
-                infoService = createService(),
-                postMapper = PostMapper()
-            ),
-            postUIMapper = PostUIMapper(
-                //resourceRepository = ResourceRepository(context)
+                postService = createService(),
+                postMapper = PostMapper(
+                    resourceRepository = ResourceRepository(context),
+                    usersStatusedStorage = UsersStatusedStorage.getInstance()
+                )
             )
         )
     }
 
-    private fun createService(): InfoService {
+    private fun createService(): PostService {
         return Retrofit.Builder()
             .baseUrl("https://jsonplaceholder.typicode.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(InfoService::class.java)
+            .create(PostService::class.java)
     }
 }

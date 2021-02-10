@@ -1,12 +1,14 @@
 package com.example.buryachenko_hw22_arch.domain
 
+import androidx.annotation.ColorInt
+
 open class PostModel
 
-class StandardPostModel(
+class StandardUserPostModel(
     val title: String,
     val userId: String,
     val body: String,
-    val hasWarning: Boolean
+    @ColorInt val backgroundColor: Int
 ) : PostModel()
 
 class BannedUserPostModel(

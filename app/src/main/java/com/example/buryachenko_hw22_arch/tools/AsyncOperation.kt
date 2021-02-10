@@ -1,7 +1,5 @@
 package com.example.buryachenko_hw22_arch.tools
 
-import com.example.buryachenko_hw22_arch.data.Post
-import com.example.buryachenko_hw22_arch.domain.PostModel
 import java.lang.Exception
 
 fun interface CancellableOperation {

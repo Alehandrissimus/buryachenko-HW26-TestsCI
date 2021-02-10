@@ -1,7 +1,5 @@
 package com.example.buryachenko_hw22_arch.tools
 
-import java.lang.Exception
-
 fun interface CancellableOperation {
     fun cancel()
 }
@@ -15,12 +13,13 @@ class AsyncOperation<T>(
         val activeThread = threadCreation {
             try {
                 val result = operation()
-                if(!Thread.currentThread().isInterrupted) {
+                if (!Thread.currentThread().isInterrupted) {
                     mainHandler.post {
                         callback(result)
                     }
                 }
-            } catch (ignore: Exception) {}
+            } catch (ignore: Exception) {
+            }
         }
 
         return CancellableOperation {

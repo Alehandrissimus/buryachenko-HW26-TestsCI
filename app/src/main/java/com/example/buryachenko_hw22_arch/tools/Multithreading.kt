@@ -14,7 +14,7 @@ class Multithreading(context: Context) {
         )
     }
 
-    private fun createThread(runnable: Runnable) : Thread {
+    private fun createThread(runnable: Runnable): Thread {
         return Thread(runnable).apply(Thread::start)
     }
 }

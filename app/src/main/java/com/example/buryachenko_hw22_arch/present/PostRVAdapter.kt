@@ -3,15 +3,13 @@ package com.example.buryachenko_hw22_arch.present
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.buryachenko_hw22_arch.R
-import com.example.buryachenko_hw22_arch.domain.BannedUserPostModel
-import com.example.buryachenko_hw22_arch.domain.PostModel
-import com.example.buryachenko_hw22_arch.domain.StandardUserPostModel
 import kotlinx.android.synthetic.main.recycleview_bannedpost.view.*
 import kotlinx.android.synthetic.main.recycleview_standardpost.view.*
 
-class PostRVAdapter(private val items: List<PostUIModel>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PostRVAdapter : ListAdapter<PostUIModel, RecyclerView.ViewHolder>(PostRVDiffUtils()) {
 
     enum class ViewType {
         STANDARD,
@@ -19,7 +17,7 @@ class PostRVAdapter(private val items: List<PostUIModel>): RecyclerView.Adapter<
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when(items[position]) {
+        return when (getItem(position)) {
             is StandardPostUIModel -> ViewType.STANDARD
             is BannedPostUIModel -> ViewType.BANNED
             else -> throw IllegalArgumentException()
@@ -27,7 +25,7 @@ class PostRVAdapter(private val items: List<PostUIModel>): RecyclerView.Adapter<
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if(viewType == ViewType.STANDARD.ordinal) {
+        return if (viewType == ViewType.STANDARD.ordinal) {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.recycleview_standardpost, parent, false)
 
@@ -41,15 +39,12 @@ class PostRVAdapter(private val items: List<PostUIModel>): RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if(holder is PostStandardVH) {
-            holder.bind(items[position] as StandardPostUIModel)
+        if (holder is PostStandardVH) {
+            holder.bind(getItem(position) as StandardPostUIModel)
         } else if (holder is PostBannedVH) {
-            holder.bind(items[position] as BannedPostUIModel)
+            holder.bind(getItem(position) as BannedPostUIModel)
         }
     }
-
-    override fun getItemCount() = items.size
-
 }
 
 class PostStandardVH(view: View) : RecyclerView.ViewHolder(view) {

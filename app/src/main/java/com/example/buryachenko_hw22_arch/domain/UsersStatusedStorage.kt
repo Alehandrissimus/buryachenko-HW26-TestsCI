@@ -12,9 +12,9 @@ class UsersStatusedStorage private constructor() {
         userList.add(UserStatused(user, status))
     }
 
-    fun getList() : MutableSet<UserStatused> = userList
+    fun getList(): MutableSet<UserStatused> = userList
 
-    private fun setup() : MutableSet<UserStatused> {
+    private fun setup(): MutableSet<UserStatused> {
         return mutableSetOf(
             UserStatused(3, UserStatus.WARNING),
             UserStatused(4, UserStatus.WARNING),
@@ -27,7 +27,7 @@ class UsersStatusedStorage private constructor() {
 
         @Synchronized
         fun getInstance(): UsersStatusedStorage {
-            if(usersStatusedStorage == null) {
+            if (usersStatusedStorage == null) {
                 usersStatusedStorage = UsersStatusedStorage()
             }
             return usersStatusedStorage ?: UsersStatusedStorage()

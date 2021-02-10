@@ -3,7 +3,7 @@ package com.example.buryachenko_hw22_arch.tools
 class Result<T, E> private constructor(
     private val success: ValueWrapper<T>? = null,
     private val error: ValueWrapper<E>? = null
-){
+) {
     private class ValueWrapper<T>(val value: T)
 
     val isError = error != null

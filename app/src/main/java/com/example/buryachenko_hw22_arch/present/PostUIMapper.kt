@@ -1,21 +1,18 @@
 package com.example.buryachenko_hw22_arch.present
 
-import androidx.annotation.ColorInt
 import com.example.buryachenko_hw22_arch.R
-import com.example.buryachenko_hw22_arch.data.PostErrors
 import com.example.buryachenko_hw22_arch.domain.BannedUserPostModel
 import com.example.buryachenko_hw22_arch.domain.PostModel
 import com.example.buryachenko_hw22_arch.domain.StandardUserPostModel
 import com.example.buryachenko_hw22_arch.tools.Result
-import java.lang.IllegalArgumentException
 
-class PostUIMapper(private val resourceRepository: ResourceRepository){
-    fun map(postResult: Result<List<PostModel>, String>): Result<List<PostUIModel>, String>{
+class PostUIMapper(private val resourceRepository: ResourceRepository) {
+    fun map(postResult: Result<List<PostModel>, String>): Result<List<PostUIModel>, String> {
         return postResult.mapSuccess { postModelList ->
             postModelList.map { postModel ->
-                when(postModel) {
+                when (postModel) {
                     is StandardUserPostModel -> {
-                        if(postModel.hasWarning) {
+                        if (postModel.hasWarning) {
                             StandardPostUIModel(
                                 userId = resourceRepository.getString(
                                     R.string.warning_name_template,
@@ -45,6 +42,8 @@ class PostUIMapper(private val resourceRepository: ResourceRepository){
                     else -> throw IllegalArgumentException()
                 }
             }
+        }.mapError { error ->
+            resourceRepository.getString(R.string.error_template, error)
         }
     }
 }

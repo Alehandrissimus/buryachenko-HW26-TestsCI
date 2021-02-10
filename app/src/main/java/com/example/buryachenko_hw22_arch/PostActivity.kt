@@ -1,16 +1,16 @@
 package com.example.buryachenko_hw22_arch
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.buryachenko_hw22_arch.domain.PostModel
+import com.example.buryachenko_hw22_arch.data.PostComponent
 import com.example.buryachenko_hw22_arch.present.PostPresenter
 import com.example.buryachenko_hw22_arch.present.PostRVAdapter
-import com.example.buryachenko_hw22_arch.present.PostView
-import com.example.buryachenko_hw22_arch.data.PostComponent
 import com.example.buryachenko_hw22_arch.present.PostUIModel
+import com.example.buryachenko_hw22_arch.present.PostView
 import kotlinx.android.synthetic.main.activity_posts.*
 
 class PostActivity : AppCompatActivity(), PostView {
@@ -31,7 +31,8 @@ class PostActivity : AppCompatActivity(), PostView {
     }
 
     override fun showError(error: String) {
-        titleTextView.text = error
+        postsErrorText.visibility = View.VISIBLE
+        postsErrorText.text = error
     }
 
     override fun setupPostList(list: List<PostUIModel>) {
@@ -39,7 +40,10 @@ class PostActivity : AppCompatActivity(), PostView {
     }
 
     private fun setupRecycleView(list: List<PostUIModel>) {
-        postsRecycleView.adapter = PostRVAdapter(list)
+        val adapter = PostRVAdapter()
+        postsRecycleView.adapter = adapter
+        adapter.submitList(list)
+
         postsRecycleView.layoutManager =
             LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
 

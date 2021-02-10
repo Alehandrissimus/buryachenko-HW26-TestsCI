@@ -36,6 +36,6 @@ class PostRepository(
             return@async Result.success(result)
         }
 
-        return asyncOperation.map(postMapper::map)
+        return asyncOperation.map(postMapper::mapping)
     }
 }

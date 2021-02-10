@@ -4,13 +4,13 @@ import androidx.annotation.ColorInt
 
 abstract class PostUIModel
 
-class StandardPostUIModel(
+data class StandardPostUIModel(
     val title: String,
     val userId: String,
     val body: String,
     @ColorInt val backgroundColor: Int
 ) : PostUIModel()
 
-class BannedPostUIModel(
+data class BannedPostUIModel(
     val userId: String
 ) : PostUIModel()

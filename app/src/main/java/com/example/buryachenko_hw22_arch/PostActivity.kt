@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.buryachenko_hw22_arch.data.PostComponent
 import com.example.buryachenko_hw22_arch.present.PostPresenter
-import com.example.buryachenko_hw22_arch.present.PostRVAdapter
-import com.example.buryachenko_hw22_arch.present.PostUIModel
+import com.example.buryachenko_hw22_arch.present.adapter.PostRVAdapter
+import com.example.buryachenko_hw22_arch.present.model.PostUIModel
 import com.example.buryachenko_hw22_arch.present.PostView
 import kotlinx.android.synthetic.main.activity_posts.*
 

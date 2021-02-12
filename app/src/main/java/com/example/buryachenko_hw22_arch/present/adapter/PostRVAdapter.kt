@@ -1,4 +1,4 @@
-package com.example.buryachenko_hw22_arch.present
+package com.example.buryachenko_hw22_arch.present.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.buryachenko_hw22_arch.R
+import com.example.buryachenko_hw22_arch.present.model.BannedPostUIModel
+import com.example.buryachenko_hw22_arch.present.model.PostUIModel
+import com.example.buryachenko_hw22_arch.present.model.StandardPostUIModel
 import kotlinx.android.synthetic.main.recycleview_bannedpost.view.*
 import kotlinx.android.synthetic.main.recycleview_standardpost.view.*
 

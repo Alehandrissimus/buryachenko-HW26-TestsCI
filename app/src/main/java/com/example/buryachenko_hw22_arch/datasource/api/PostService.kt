@@ -1,5 +1,6 @@
-package com.example.buryachenko_hw22_arch.data
+package com.example.buryachenko_hw22_arch.datasource.api
 
+import com.example.buryachenko_hw22_arch.data.Post
 import retrofit2.Call
 import retrofit2.http.GET
 

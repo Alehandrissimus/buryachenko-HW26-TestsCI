@@ -1,5 +1,6 @@
 package com.example.buryachenko_hw22_arch.data
 
+import com.example.buryachenko_hw22_arch.datasource.api.PostService
 import com.example.buryachenko_hw22_arch.domain.PostMapper
 import com.example.buryachenko_hw22_arch.domain.PostModel
 import com.example.buryachenko_hw22_arch.tools.AsyncOperation

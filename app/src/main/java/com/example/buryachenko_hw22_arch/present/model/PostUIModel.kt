@@ -1,4 +1,4 @@
-package com.example.buryachenko_hw22_arch.present
+package com.example.buryachenko_hw22_arch.present.model
 
 import androidx.annotation.ColorInt
 

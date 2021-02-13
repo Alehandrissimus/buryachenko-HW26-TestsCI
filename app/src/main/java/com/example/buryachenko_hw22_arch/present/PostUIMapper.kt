@@ -9,7 +9,9 @@ import com.example.buryachenko_hw22_arch.present.model.PostUIModel
 import com.example.buryachenko_hw22_arch.present.model.StandardPostUIModel
 import com.example.buryachenko_hw22_arch.tools.Result
 
-class PostUIMapper(private val resourceRepository: ResourceRepository) {
+class PostUIMapper(
+    private val resourceRepository: ResourceRepository
+) {
     fun map(postResult: Result<List<PostModel>, String>): Result<List<PostUIModel>, String> {
         return postResult.mapSuccess { postModelList ->
             postModelList.map { postModel ->

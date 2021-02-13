@@ -1,7 +1,9 @@
 package com.example.buryachenko_hw22_arch
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,18 +13,24 @@ import com.example.buryachenko_hw22_arch.present.PostPresenter
 import com.example.buryachenko_hw22_arch.present.adapter.PostRVAdapter
 import com.example.buryachenko_hw22_arch.present.model.PostUIModel
 import com.example.buryachenko_hw22_arch.present.PostView
-import kotlinx.android.synthetic.main.activity_posts.*
 
-class PostActivity : AppCompatActivity(), PostView {
+class  NavigationActivity : AppCompatActivity(), PostView {
+
+    val navigator by lazy { Navigator(supportFragmentManager, R.id.container) }
 
     private var presenter: PostPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_posts)
+        setContentView(R.layout.activity_navigation)
 
         presenter = PostComponent.createPresenter(this)
         presenter?.attachView(this)
+
+    }
+
+    override fun onBackPressed() {
+        navigator.popBackStack()
     }
 
     override fun onDestroy() {
@@ -31,24 +39,10 @@ class PostActivity : AppCompatActivity(), PostView {
     }
 
     override fun showError(error: String) {
-        postsErrorText.visibility = View.VISIBLE
-        postsErrorText.text = error
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show()
     }
 
     override fun setupPostList(list: List<PostUIModel>) {
-        setupRecycleView(list)
-    }
-
-    private fun setupRecycleView(list: List<PostUIModel>) {
-        val adapter = PostRVAdapter()
-        postsRecycleView.adapter = adapter
-        adapter.submitList(list)
-
-        postsRecycleView.layoutManager =
-            LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
-
-        postsRecycleView.addItemDecoration(
-            DividerItemDecoration(applicationContext, RecyclerView.VERTICAL)
-        )
+        navigator.showPostsFragment(list)
     }
 }

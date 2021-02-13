@@ -1,4 +1,4 @@
-package com.example.buryachenko_hw22_arch.data
+package com.example.buryachenko_hw22_arch.data.model
 
 data class Post(
     val userId: Int,

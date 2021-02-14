@@ -1,23 +1,20 @@
 package com.example.buryachenko_hw22_arch
 
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.Observer
 import com.example.buryachenko_hw22_arch.data.PostComponent
+import com.example.buryachenko_hw22_arch.present.NavigationModel
 import com.example.buryachenko_hw22_arch.present.PostPresenter
-import com.example.buryachenko_hw22_arch.present.adapter.PostRVAdapter
 import com.example.buryachenko_hw22_arch.present.model.PostUIModel
 import com.example.buryachenko_hw22_arch.present.PostView
 
 class  NavigationActivity : AppCompatActivity(), PostView {
 
+    private val viewModel: NavigationModel by viewModels()
     val navigator by lazy { Navigator(supportFragmentManager, R.id.container) }
-
     private var presenter: PostPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,5 +41,11 @@ class  NavigationActivity : AppCompatActivity(), PostView {
 
     override fun setupPostList(list: List<PostUIModel>) {
         navigator.showPostsFragment(list)
+    }
+
+    private fun observePostsRepo() {
+        viewModel.reposLiveData.observe(this, Observer {
+            //setupPostList(it)
+        })
     }
 }

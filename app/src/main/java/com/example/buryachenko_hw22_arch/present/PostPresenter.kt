@@ -21,9 +21,12 @@ class PostPresenter(
     fun attachView(postView: PostView) {
         view = postView
 
+        /*
         cancellableOperation = postRepository.getInfo()
             .map(postUIMapper::map)
             .postOnMainThread(::showResult)
+
+         */
     }
 
     fun detachView() {

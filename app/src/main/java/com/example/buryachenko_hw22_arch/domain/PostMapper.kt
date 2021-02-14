@@ -4,7 +4,9 @@ import com.example.buryachenko_hw22_arch.data.model.Post
 import com.example.buryachenko_hw22_arch.data.PostErrors
 import com.example.buryachenko_hw22_arch.tools.Result
 
-class PostMapper(private val usersStatusedStorage: UsersStatusedStorage) {
+class PostMapper(
+    private val usersStatusedStorage: UsersStatusedStorage
+) {
     fun mapping(postResult: Result<List<Post>, PostErrors>): Result<List<PostModel>, String> {
         return postResult.mapSuccess { postList ->
             postList.map { post ->

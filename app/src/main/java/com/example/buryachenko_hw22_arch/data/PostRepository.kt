@@ -17,16 +17,16 @@ class PostRepository(
     private val postService: PostService,
     private val postMapper: PostMapper
 ) {
-    fun getInfo(): AsyncOperation<Result<List<PostModel>, String>> {
-        val asyncOperation = multithreading.async<Result<List<Post>, PostErrors>> {
+    fun getInfo(): Result<List<PostModel>, String> {
 
-            val info = postService.getInfo().execute().body()
-                ?: return@async Result.error(PostErrors.INFO_NOT_LOADED)
+        val list = mutableListOf<Post>()
+        val loaderror: PostErrors?
 
-            val result = mutableListOf<Post>()
+        val info = postService.getInfo().execute()
 
-            info.map { post ->
-                result.add(
+        return if (info.isSuccessful) {
+            info.body()?.map { post ->
+                list.add(
                     Post(
                         userId = post.userId,
                         title = post.title,
@@ -34,10 +34,10 @@ class PostRepository(
                     )
                 )
             }
-
-            return@async Result.success(result)
+            postMapper.mapping(Result.success(list))
+        } else {
+            loaderror = PostErrors.INFO_NOT_LOADED
+            postMapper.mapping(Result.error(loaderror))
         }
-
-        return asyncOperation.map(postMapper::mapping)
     }
 }

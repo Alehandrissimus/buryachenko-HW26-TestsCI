@@ -3,6 +3,7 @@ package com.example.buryachenko_hw22_arch.present.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.buryachenko_hw22_arch.R
@@ -17,6 +18,10 @@ class PostRVAdapter : ListAdapter<PostUIModel, RecyclerView.ViewHolder>(PostRVDi
     enum class ViewType {
         STANDARD,
         BANNED
+    }
+
+    override fun submitList(list: List<PostUIModel>?) {
+        super.submitList(list?.let{ArrayList(it)} )
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -51,6 +56,8 @@ class PostRVAdapter : ListAdapter<PostUIModel, RecyclerView.ViewHolder>(PostRVDi
 }
 
 class PostStandardVH(view: View) : RecyclerView.ViewHolder(view) {
+
+
     fun bind(userPost: StandardPostUIModel) {
         itemView.recycleStandardTextTitle.text = userPost.title
         itemView.recycleStandardTextUser.text = userPost.userId

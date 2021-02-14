@@ -5,7 +5,7 @@ import com.example.buryachenko_hw22_arch.datasource.api.PostService
 import com.example.buryachenko_hw22_arch.domain.PostMapper
 import com.example.buryachenko_hw22_arch.domain.UsersStatusedStorage
 import com.example.buryachenko_hw22_arch.present.PostPresenter
-import com.example.buryachenko_hw22_arch.present.PostUIMapper
+import com.example.buryachenko_hw22_arch.domain.PostUIMapper
 import com.example.buryachenko_hw22_arch.present.ResourceRepository
 import com.example.buryachenko_hw22_arch.tools.Multithreading
 import retrofit2.Retrofit
@@ -25,6 +25,22 @@ object PostComponent {
             postUIMapper = PostUIMapper(
                 resourceRepository = ResourceRepository(context)
             )
+        )
+    }
+
+    fun createPostRepository(context: Context): PostRepository {
+        return PostRepository(
+            multithreading = Multithreading(context),
+            postService = createService(),
+            postMapper = PostMapper(
+                usersStatusedStorage = UsersStatusedStorage.getInstance()
+            )
+        )
+    }
+
+    fun createPostUIMapper(context: Context): PostUIMapper {
+        return PostUIMapper(
+            resourceRepository = ResourceRepository(context)
         )
     }
 

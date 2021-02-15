@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/red"
-    android:orientation="vertical">
+<layout>
 
-    <TextView
-        android:id="@+id/recycleBannedText"
-        android:layout_width="wrap_content"
+    <data>
+
+        <variable
+            name="model"
+            type="com.example.buryachenko_hw22_arch.present.model.BannedPostUIModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/margin_small"
-        android:gravity="center"
-        android:textSize="@dimen/textsize_medium"
-        android:textStyle="bold" />
+        android:background="@color/red"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/recycleBannedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_small"
+            android:gravity="center"
+            android:text="@{model.userId}"
+            android:textSize="@dimen/textsize_medium"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</layout>

@@ -7,6 +7,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.buryachenko_hw22_arch.R
+import com.example.buryachenko_hw22_arch.databinding.RecycleviewBannedpostBinding
+import com.example.buryachenko_hw22_arch.databinding.RecycleviewStandardpostBinding
 import com.example.buryachenko_hw22_arch.present.model.BannedPostUIModel
 import com.example.buryachenko_hw22_arch.present.model.PostUIModel
 import com.example.buryachenko_hw22_arch.present.model.StandardPostUIModel
@@ -57,17 +59,18 @@ class PostRVAdapter : ListAdapter<PostUIModel, RecyclerView.ViewHolder>(PostRVDi
 
 class PostStandardVH(view: View) : RecyclerView.ViewHolder(view) {
 
+    private val binding = DataBindingUtil.bind<RecycleviewStandardpostBinding>(view)
 
     fun bind(userPost: StandardPostUIModel) {
-        itemView.recycleStandardTextTitle.text = userPost.title
-        itemView.recycleStandardTextUser.text = userPost.userId
-        itemView.recycleStandardTextBody.text = userPost.body
-        itemView.recycleStandardContainer.setBackgroundColor(userPost.backgroundColor)
+        binding?.model = userPost
     }
 }
 
 class PostBannedVH(view: View) : RecyclerView.ViewHolder(view) {
-    fun bind(post: BannedPostUIModel) {
-        itemView.recycleBannedText.text = post.userId
+
+    private val binding = DataBindingUtil.bind<RecycleviewBannedpostBinding>(view)
+
+    fun bind(userPost: BannedPostUIModel) {
+        binding?.model = userPost
     }
 }

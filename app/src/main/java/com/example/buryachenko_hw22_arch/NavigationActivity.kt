@@ -21,24 +21,15 @@ class  NavigationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
 
-        observePostsRepo()
         viewModel.getRepoList(applicationContext)
         navigator.showPostsFragment()
-        //viewModel.reposLiveData.value?.let { navigator.showPostsFragment(it) }
     }
 
     override fun onBackPressed() {
-        navigator.popBackStack()
-    }
-
-    private fun observePostsRepo() {
-        viewModel.reposLiveData.observe(this, Observer { list ->
-            Log.d("TAG", "observer ${list.first()}")
-            setupPostList(list)
-        })
-    }
-
-    private fun setupPostList(items: List<PostUIModel>) {
-
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
     }
 }

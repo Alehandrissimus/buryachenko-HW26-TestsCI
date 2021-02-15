@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/recycleStandardContainer"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/margin_small">
+<layout>
 
-    <TextView
-        android:id="@+id/recycleStandardTextUser"
-        android:layout_width="wrap_content"
+    <data>
+        <variable
+            name="model"
+            type="com.example.buryachenko_hw22_arch.present.model.StandardPostUIModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/recycleStandardContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/textsize_medium" />
+        android:orientation="vertical"
+        android:padding="@dimen/margin_small"
+        android:background="@{model.backgroundColor}">
 
-    <TextView
-        android:id="@+id/recycleStandardTextTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/textsize_small"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/recycleStandardTextUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.userId}"
+            android:textSize="@dimen/textsize_medium" />
 
-    <TextView
-        android:id="@+id/recycleStandardTextBody"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/textsize_small" />
+        <TextView
+            android:id="@+id/recycleStandardTextTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.title}"
+            android:textSize="@dimen/textsize_small"
+            android:textStyle="bold" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/recycleStandardTextBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.body}"
+            android:textSize="@dimen/textsize_small" />
+
+    </LinearLayout>
+</layout>

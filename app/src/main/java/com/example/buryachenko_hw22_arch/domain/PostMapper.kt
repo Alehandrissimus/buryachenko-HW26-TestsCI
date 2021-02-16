@@ -3,8 +3,9 @@ package com.example.buryachenko_hw22_arch.domain
 import com.example.buryachenko_hw22_arch.data.model.Post
 import com.example.buryachenko_hw22_arch.data.PostErrors
 import com.example.buryachenko_hw22_arch.tools.Result
+import javax.inject.Inject
 
-class PostMapper(
+class PostMapper @Inject constructor(
     private val usersStatusedStorage: UsersStatusedStorage
 ) {
     fun mapping(postResult: Result<List<Post>, PostErrors>): Result<List<PostModel>, String> {

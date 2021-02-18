@@ -10,12 +10,12 @@ class Result<T, E> private constructor(
 
     val successResult: T
         get() = requireNotNull(success) {
-            "Result was without  success"
+            "Result was without success"
         }.value
 
     val errorResult: E
         get() = requireNotNull(error) {
-            "Result was without  error"
+            "Result was without error"
         }.value
 
     fun <R> mapSuccess(transformation: (T) -> R): Result<R, E> {

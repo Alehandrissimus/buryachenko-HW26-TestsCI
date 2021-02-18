@@ -1,9 +1,9 @@
 package com.example.buryachenko_hw22_arch.present
 
 import com.example.buryachenko_hw22_arch.R
-import com.example.buryachenko_hw22_arch.domain.BannedUserPostModel
-import com.example.buryachenko_hw22_arch.domain.PostModel
-import com.example.buryachenko_hw22_arch.domain.StandardUserPostModel
+import com.example.buryachenko_hw22_arch.domain.model.BannedUserPostModel
+import com.example.buryachenko_hw22_arch.domain.model.PostModel
+import com.example.buryachenko_hw22_arch.domain.model.StandardUserPostModel
 import com.example.buryachenko_hw22_arch.present.model.BannedPostUIModel
 import com.example.buryachenko_hw22_arch.present.model.PostUIModel
 import com.example.buryachenko_hw22_arch.present.model.StandardPostUIModel

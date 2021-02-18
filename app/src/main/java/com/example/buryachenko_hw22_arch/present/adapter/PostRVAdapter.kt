@@ -12,8 +12,6 @@ import com.example.buryachenko_hw22_arch.databinding.RecycleviewStandardpostBind
 import com.example.buryachenko_hw22_arch.present.model.BannedPostUIModel
 import com.example.buryachenko_hw22_arch.present.model.PostUIModel
 import com.example.buryachenko_hw22_arch.present.model.StandardPostUIModel
-import kotlinx.android.synthetic.main.recycleview_bannedpost.view.*
-import kotlinx.android.synthetic.main.recycleview_standardpost.view.*
 
 class PostRVAdapter : ListAdapter<PostUIModel, RecyclerView.ViewHolder>(PostRVDiffUtils()) {
 
@@ -23,7 +21,7 @@ class PostRVAdapter : ListAdapter<PostUIModel, RecyclerView.ViewHolder>(PostRVDi
     }
 
     override fun submitList(list: List<PostUIModel>?) {
-        super.submitList(list?.let{ArrayList(it)} )
+        super.submitList(list?.let { ArrayList(it) })
     }
 
     override fun getItemViewType(position: Int): Int {

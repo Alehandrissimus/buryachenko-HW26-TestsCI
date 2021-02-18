@@ -1,9 +1,9 @@
 package com.example.buryachenko_hw22_arch.data
 
 import com.example.buryachenko_hw22_arch.data.model.Post
-import com.example.buryachenko_hw22_arch.datasource.api.PostService
+import com.example.buryachenko_hw22_arch.data.room.PostsDatabase
 import com.example.buryachenko_hw22_arch.domain.PostMapper
-import com.example.buryachenko_hw22_arch.domain.PostModel
+import com.example.buryachenko_hw22_arch.domain.model.PostModel
 import com.example.buryachenko_hw22_arch.tools.Result
 import javax.inject.Inject
 
@@ -12,11 +12,13 @@ enum class PostErrors {
 }
 
 class PostRepository @Inject constructor(
+    private val database: PostsDatabase,
     private val postService: PostService,
     private val postMapper: PostMapper
 ) {
     fun getInfo(): Result<List<PostModel>, String> {
-        val list = mutableListOf<Post>() // add local storage
+        val list = mutableListOf<Post>()
+        list.addAll(0, database.postsDao().getAllPosts().asReversed())
         val info = postService.getInfo().execute()
 
         return if (info.isSuccessful) {
@@ -24,6 +26,7 @@ class PostRepository @Inject constructor(
                 list.add(
                     Post(
                         userId = post.userId,
+                        postId = post.postId,
                         title = post.title,
                         body = post.body
                     )

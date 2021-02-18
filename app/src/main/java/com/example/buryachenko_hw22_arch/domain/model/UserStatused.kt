@@ -1,4 +1,4 @@
-package com.example.buryachenko_hw22_arch.domain
+package com.example.buryachenko_hw22_arch.domain.model
 
 enum class UserStatus {
     STANDARD,

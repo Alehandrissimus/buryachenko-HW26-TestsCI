@@ -3,4 +3,15 @@
     <string name="warning_name_template">%S Caution! This user has a Warning!</string>
     <string name="banned_name_template">There could be %S\'s post, but he is Banned</string>
     <string name="error_template">Error : %s</string>
+    <string name="post_title">Post title</string>
+    <string name="post_body">Post body</string>
+    <string name="post">Post</string>
+    <string name="cancel">Cancel</string>
+    <string name="small_title">Title is too small! 3 symbols at least!</string>
+    <string name="small_body">Body is too small! 5 symbols at least!</string>
+    <string name="restricted_words">Title contains banned words!</string>
+    <string name="big_title">Title is too big! 50 symbols maximum!</string>
+    <string name="big_body">Body is too big! 500 symbols maximum!</string>
+    <string name="addbutton">addButton</string>
+
 </resources>

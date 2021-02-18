@@ -1,7 +1,12 @@
 package com.example.buryachenko_hw22_arch.domain
 
-import com.example.buryachenko_hw22_arch.data.model.Post
 import com.example.buryachenko_hw22_arch.data.PostErrors
+import com.example.buryachenko_hw22_arch.data.UsersStatusedStorage
+import com.example.buryachenko_hw22_arch.data.model.Post
+import com.example.buryachenko_hw22_arch.domain.model.BannedUserPostModel
+import com.example.buryachenko_hw22_arch.domain.model.PostModel
+import com.example.buryachenko_hw22_arch.domain.model.StandardUserPostModel
+import com.example.buryachenko_hw22_arch.domain.model.UserStatus
 import com.example.buryachenko_hw22_arch.tools.Result
 import javax.inject.Inject
 

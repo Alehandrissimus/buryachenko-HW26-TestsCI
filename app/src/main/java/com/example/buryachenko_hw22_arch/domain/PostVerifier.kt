@@ -1,6 +1,7 @@
 package com.example.buryachenko_hw22_arch.domain
 
-import com.example.buryachenko_hw22_arch.present.model.StandardPostUIModel
+import com.example.buryachenko_hw22_arch.present.model.PostUIModel
+
 
 enum class InputStates {
     ACCEPTED,
@@ -13,7 +14,7 @@ enum class InputStates {
 }
 
 class PostVerifier {
-    fun verify(post: StandardPostUIModel): InputStates {
+    fun verify(post: PostUIModel.StandardPostUIModel): InputStates {
         var contains = false
         val bannedWordsList = listOf("реклама", "товар", "куплю")
 

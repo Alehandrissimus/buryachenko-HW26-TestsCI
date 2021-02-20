@@ -2,14 +2,14 @@ package com.example.buryachenko_hw22_arch.domain
 
 import com.example.buryachenko_hw22_arch.data.model.Post
 import com.example.buryachenko_hw22_arch.data.room.PostsDatabase
-import com.example.buryachenko_hw22_arch.present.model.StandardPostUIModel
+import com.example.buryachenko_hw22_arch.present.model.PostUIModel
 import javax.inject.Inject
 
 class InsertPostUseCase @Inject constructor(
     private val database: PostsDatabase,
     private val postVerifier: PostVerifier
 ) {
-    operator fun invoke(post: StandardPostUIModel): InputStates {
+    operator fun invoke(post: PostUIModel.StandardPostUIModel): InputStates {
 
         return when (val status = postVerifier.verify(post)) {
             InputStates.ACCEPTED -> {
@@ -21,6 +21,7 @@ class InsertPostUseCase @Inject constructor(
                         body = post.body
                     )
                 )
+
                 InputStates.ACCEPTED
             }
             else -> status

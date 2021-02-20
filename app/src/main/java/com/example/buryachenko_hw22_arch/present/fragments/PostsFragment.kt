@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 class PostsFragment : BaseFragment(R.layout.fragment_posts) {
 
     private val viewModel: NavigationModel by activityViewModels()
-    private val adapter = PostRVAdapter()
+    private val RVadapter = PostRVAdapter()
     private lateinit var binding: FragmentPostsBinding
 
     companion object {
@@ -53,11 +53,10 @@ class PostsFragment : BaseFragment(R.layout.fragment_posts) {
     }
 
     private fun setupRecycleView() {
-        binding.apply {
-            postsRecycleView.adapter = adapter
-            postsRecycleView.layoutManager =
-                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            postsRecycleView.addItemDecoration(
+        binding.postsRecycleView.apply {
+            adapter = RVadapter
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            addItemDecoration(
                 DividerItemDecoration(context, RecyclerView.VERTICAL)
             )
         }
@@ -65,7 +64,7 @@ class PostsFragment : BaseFragment(R.layout.fragment_posts) {
 
     private fun observePostsRepo() {
         viewModel.reposLiveData.observe(viewLifecycleOwner, { list ->
-            adapter.submitList(list)
+            RVadapter.submitList(list)
             lifecycleScope.launch {
                 delay(10)
                 binding.postsRecycleView.scrollToPosition(0)

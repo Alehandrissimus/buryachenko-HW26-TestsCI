@@ -33,7 +33,7 @@ class NavigationModel @Inject constructor(
         }
     }
 
-    fun updatePostsList(post: StandardPostUIModel): InputStates {
+    fun updatePostsList(post: PostUIModel.StandardPostUIModel): InputStates {
         var state = InputStates.ACCEPTED
         viewModelScope.launch(Dispatchers.IO) {
             state = insertPostUseCase(post)

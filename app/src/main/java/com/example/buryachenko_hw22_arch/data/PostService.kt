@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface PostService {
     @GET("posts/")
-    fun getInfo(): Call<List<Post>>
+    fun getPosts(): Call<List<Post>>
 }

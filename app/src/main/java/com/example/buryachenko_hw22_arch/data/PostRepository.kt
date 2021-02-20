@@ -17,13 +17,13 @@ class PostRepository @Inject constructor(
     private val postMapper: PostMapper
 ) {
     fun getInfo(): Result<List<PostModel>, String> {
-        val list = mutableListOf<Post>()
-        list.addAll(0, database.postsDao().getAllPosts().asReversed())
-        val info = postService.getInfo().execute()
+        val posts = mutableListOf<Post>()
+        posts.addAll(0, database.postsDao().getAllPosts().asReversed())
+        val postsBack = postService.getPosts().execute()
 
-        return if (info.isSuccessful) {
-            info.body()?.map { post ->
-                list.add(
+        return if (postsBack.isSuccessful) {
+            postsBack.body()?.map { post ->
+                posts.add(
                     Post(
                         userId = post.userId,
                         postId = post.postId,
@@ -32,7 +32,7 @@ class PostRepository @Inject constructor(
                     )
                 )
             }
-            postMapper.mapping(Result.success(list))
+            postMapper.mapping(Result.success(posts))
         } else {
             postMapper.mapping(Result.error(PostErrors.INFO_NOT_LOADED))
         }

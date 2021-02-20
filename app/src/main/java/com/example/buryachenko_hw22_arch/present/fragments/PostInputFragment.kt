@@ -11,7 +11,7 @@ import com.example.buryachenko_hw22_arch.R
 import com.example.buryachenko_hw22_arch.databinding.FragmentPostInputBinding
 import com.example.buryachenko_hw22_arch.domain.InputStates
 import com.example.buryachenko_hw22_arch.present.model.NavigationModel
-import com.example.buryachenko_hw22_arch.present.model.StandardPostUIModel
+import com.example.buryachenko_hw22_arch.present.model.PostUIModel
 
 class PostInputFragment : BaseFragment(R.layout.fragment_post_input) {
 
@@ -41,7 +41,8 @@ class PostInputFragment : BaseFragment(R.layout.fragment_post_input) {
     private fun setupListeners() {
         binding.postAddButton.setOnClickListener {
             val status = viewModel.updatePostsList(
-                StandardPostUIModel(
+                PostUIModel.StandardPostUIModel(
+                    postId = -1,
                     userId = "11",
                     title = binding.fragmentInputTitle.text.toString(),
                     body = binding.fragmentInputBody.text.toString(),

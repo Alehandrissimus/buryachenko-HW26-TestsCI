@@ -1,12 +1,8 @@
 package com.example.buryachenko_hw22_arch.present
 
 import com.example.buryachenko_hw22_arch.R
-import com.example.buryachenko_hw22_arch.domain.model.BannedUserPostModel
 import com.example.buryachenko_hw22_arch.domain.model.PostModel
-import com.example.buryachenko_hw22_arch.domain.model.StandardUserPostModel
-import com.example.buryachenko_hw22_arch.present.model.BannedPostUIModel
 import com.example.buryachenko_hw22_arch.present.model.PostUIModel
-import com.example.buryachenko_hw22_arch.present.model.StandardPostUIModel
 import com.example.buryachenko_hw22_arch.tools.Result
 import javax.inject.Inject
 
@@ -17,9 +13,11 @@ class PostUIMapper @Inject constructor(
         return postResult.mapSuccess { postModelList ->
             postModelList.map { postModel ->
                 when (postModel) {
-                    is StandardUserPostModel -> {
+                    is PostModel.StandardUserPostModel -> {
+                        /*
                         if (postModel.hasWarning) {
-                            StandardPostUIModel(
+                            PostUIModel.StandardPostUIModel(
+                                postId = postModel.postId,
                                 userId = resourceRepository.getString(
                                     R.string.warning_name_template,
                                     postModel.userId
@@ -29,23 +27,42 @@ class PostUIMapper @Inject constructor(
                                 backgroundColor = resourceRepository.getColor(R.color.yellow)
                             )
                         } else {
-                            StandardPostUIModel(
+                            PostUIModel.StandardPostUIModel(
+                                postId = postModel.postId,
                                 userId = postModel.userId,
                                 title = postModel.title,
                                 body = postModel.body,
                                 backgroundColor = resourceRepository.getColor(R.color.design_default_color_background)
                             )
                         }
+
+                         */
+
+                        PostUIModel.StandardPostUIModel(
+                            postId = postModel.postId,
+                            title = postModel.title,
+                            body = postModel.body,
+                            userId = if(postModel.hasWarning) {
+                                resourceRepository.getString(R.string.warning_name_template, postModel.userId)
+                            } else {
+                                postModel.userId
+                            },
+                            backgroundColor = if(postModel.hasWarning) {
+                                resourceRepository.getColor(R.color.yellow)
+                            } else {
+                                resourceRepository.getColor(R.color.design_default_color_background)
+                            }
+                        )
                     }
-                    is BannedUserPostModel -> {
-                        BannedPostUIModel(
+                    is PostModel.BannedUserPostModel -> {
+                        PostUIModel.BannedPostUIModel(
+                            postId = postModel.postId,
                             userId = resourceRepository.getString(
                                 R.string.banned_name_template,
                                 postModel.userId
                             ),
                         )
                     }
-                    else -> throw IllegalArgumentException()
                 }
             }
         }.mapError { error ->

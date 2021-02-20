@@ -5,17 +5,13 @@ import com.example.buryachenko_hw22_arch.domain.model.UserStatused
 
 class UsersStatusedStorage private constructor() {
 
-    private val userList = mutableSetOf<UserStatused>()
+    private val users = mutableSetOf<UserStatused>()
 
     init {
-        userList.addAll(setup())
+        users.addAll(setup())
     }
 
-    fun addUser(user: Int, status: UserStatus) {
-        userList.add(UserStatused(user, status))
-    }
-
-    fun getList(): MutableSet<UserStatused> = userList
+    fun getList(): MutableSet<UserStatused> = users
 
     private fun setup(): MutableSet<UserStatused> {
         return mutableSetOf(

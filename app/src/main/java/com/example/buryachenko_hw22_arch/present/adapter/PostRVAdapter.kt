@@ -7,7 +7,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.buryachenko_hw22_arch.R
-import com.example.buryachenko_hw22_arch.data.model.Post
 import com.example.buryachenko_hw22_arch.databinding.RecycleviewBannedpostBinding
 import com.example.buryachenko_hw22_arch.databinding.RecycleviewStandardpostBinding
 import com.example.buryachenko_hw22_arch.present.model.PostUIModel
@@ -32,17 +31,17 @@ class PostRVAdapter : ListAdapter<PostUIModel, RecyclerView.ViewHolder>(PostRVDi
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType) {
+        return when (viewType) {
             ViewType.STANDARD.ordinal -> {
                 PostStandardVH(
                     view = LayoutInflater.from(parent.context)
-                        .inflate(R.layout.recycleview_standardpost, parent,false)
+                        .inflate(R.layout.recycleview_standardpost, parent, false)
                 )
             }
             ViewType.BANNED.ordinal -> {
                 PostBannedVH(
                     view = LayoutInflater.from(parent.context)
-                        .inflate(R.layout.recycleview_bannedpost, parent,false)
+                        .inflate(R.layout.recycleview_bannedpost, parent, false)
                 )
             }
             else -> throw java.lang.IllegalArgumentException("Illegal viewType")
@@ -50,7 +49,7 @@ class PostRVAdapter : ListAdapter<PostUIModel, RecyclerView.ViewHolder>(PostRVDi
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder) {
+        when (holder) {
             is PostStandardVH -> holder.bind(getItem(position) as PostUIModel.StandardPostUIModel)
             is PostBannedVH -> holder.bind(getItem(position) as PostUIModel.BannedPostUIModel)
         }

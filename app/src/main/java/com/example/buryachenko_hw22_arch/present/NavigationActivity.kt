@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.example.buryachenko_hw22_arch.R
+import com.example.buryachenko_hw22_arch.app.Navigator
 import com.example.buryachenko_hw22_arch.di.AppModule
 import com.example.buryachenko_hw22_arch.di.DaggerAppComponent
 import com.example.buryachenko_hw22_arch.present.model.NavigationModel
 import com.example.buryachenko_hw22_arch.present.model.ViewModelFactory
-import com.example.buryachenko_hw22_arch.app.Navigator
 import javax.inject.Inject
 
 class NavigationActivity : AppCompatActivity() {

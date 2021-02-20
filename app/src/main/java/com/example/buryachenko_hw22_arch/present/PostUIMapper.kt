@@ -14,40 +14,19 @@ class PostUIMapper @Inject constructor(
             postModelList.map { postModel ->
                 when (postModel) {
                     is PostModel.StandardUserPostModel -> {
-                        /*
-                        if (postModel.hasWarning) {
-                            PostUIModel.StandardPostUIModel(
-                                postId = postModel.postId,
-                                userId = resourceRepository.getString(
-                                    R.string.warning_name_template,
-                                    postModel.userId
-                                ),
-                                title = postModel.title,
-                                body = postModel.body,
-                                backgroundColor = resourceRepository.getColor(R.color.yellow)
-                            )
-                        } else {
-                            PostUIModel.StandardPostUIModel(
-                                postId = postModel.postId,
-                                userId = postModel.userId,
-                                title = postModel.title,
-                                body = postModel.body,
-                                backgroundColor = resourceRepository.getColor(R.color.design_default_color_background)
-                            )
-                        }
-
-                         */
-
                         PostUIModel.StandardPostUIModel(
                             postId = postModel.postId,
                             title = postModel.title,
                             body = postModel.body,
-                            userId = if(postModel.hasWarning) {
-                                resourceRepository.getString(R.string.warning_name_template, postModel.userId)
+                            userId = if (postModel.hasWarning) {
+                                resourceRepository.getString(
+                                    R.string.warning_name_template,
+                                    postModel.userId
+                                )
                             } else {
                                 postModel.userId
                             },
-                            backgroundColor = if(postModel.hasWarning) {
+                            backgroundColor = if (postModel.hasWarning) {
                                 resourceRepository.getColor(R.color.yellow)
                             } else {
                                 resourceRepository.getColor(R.color.design_default_color_background)

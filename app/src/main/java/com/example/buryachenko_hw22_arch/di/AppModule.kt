@@ -5,10 +5,13 @@ import androidx.annotation.NonNull
 import androidx.lifecycle.ViewModelProviders
 import androidx.room.Room
 import com.example.buryachenko_hw22_arch.data.PostRepository
-import com.example.buryachenko_hw22_arch.data.room.PostsDatabase
 import com.example.buryachenko_hw22_arch.data.PostService
 import com.example.buryachenko_hw22_arch.data.UsersStatusedStorage
-import com.example.buryachenko_hw22_arch.domain.*
+import com.example.buryachenko_hw22_arch.data.room.PostsDatabase
+import com.example.buryachenko_hw22_arch.domain.GetPostsUseCase
+import com.example.buryachenko_hw22_arch.domain.InsertPostUseCase
+import com.example.buryachenko_hw22_arch.domain.PostMapper
+import com.example.buryachenko_hw22_arch.domain.PostVerifier
 import com.example.buryachenko_hw22_arch.present.NavigationActivity
 import com.example.buryachenko_hw22_arch.present.PostUIMapper
 import com.example.buryachenko_hw22_arch.present.ResourceRepository
@@ -22,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class AppModule(private var context: Context){
+class AppModule(private var context: Context) {
 
     @Provides
     @Singleton
@@ -56,7 +59,11 @@ class AppModule(private var context: Context){
 
     @Provides
     @Singleton
-    fun providePostRepository(database: PostsDatabase, postMapper: PostMapper, postService: PostService): PostRepository {
+    fun providePostRepository(
+        database: PostsDatabase,
+        postMapper: PostMapper,
+        postService: PostService
+    ): PostRepository {
         return PostRepository(database, postService, postMapper)
     }
 
@@ -79,23 +86,29 @@ class AppModule(private var context: Context){
 
     @Provides
     @Singleton
-    fun provideViewModelFactory(getPostsUseCase: GetPostsUseCase, insertPostUseCase: InsertPostUseCase) : ViewModelFactory {
+    fun provideViewModelFactory(
+        getPostsUseCase: GetPostsUseCase,
+        insertPostUseCase: InsertPostUseCase
+    ): ViewModelFactory {
         return ViewModelFactory(getPostsUseCase, insertPostUseCase)
     }
 
     @Provides
-    fun provideViewModel() : NavigationModel {
+    fun provideViewModel(): NavigationModel {
         return ViewModelProviders.of(context as NavigationActivity).get(NavigationModel::class.java)
     }
 
     @Provides
-    fun provideGetPostsUseCase(postRepository: PostRepository, postUIMapper: PostUIMapper) : GetPostsUseCase {
+    fun provideGetPostsUseCase(
+        postRepository: PostRepository,
+        postUIMapper: PostUIMapper
+    ): GetPostsUseCase {
         return GetPostsUseCase(postRepository, postUIMapper)
     }
 
     @Provides
     @Singleton
-    fun provideDatabase() : PostsDatabase {
+    fun provideDatabase(): PostsDatabase {
         return Room.databaseBuilder(
             context,
             PostsDatabase::class.java, "database"
@@ -103,7 +116,7 @@ class AppModule(private var context: Context){
     }
 
     @Provides
-    fun providePostVerifier() : PostVerifier {
+    fun providePostVerifier(): PostVerifier {
         return PostVerifier()
     }
 }

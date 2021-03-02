@@ -4,23 +4,23 @@ import android.content.Context
 import androidx.annotation.NonNull
 import androidx.lifecycle.ViewModelProviders
 import androidx.room.Room
-import com.example.buryachenko_hw22_arch.data.PostRepository
-import com.example.buryachenko_hw22_arch.data.PostService
-import com.example.buryachenko_hw22_arch.data.UsersStatusedStorage
-import com.example.buryachenko_hw22_arch.data.room.PostsDatabase
-import com.example.buryachenko_hw22_arch.domain.GetPostsUseCase
-import com.example.buryachenko_hw22_arch.domain.InsertPostUseCase
-import com.example.buryachenko_hw22_arch.domain.PostMapper
-import com.example.buryachenko_hw22_arch.domain.PostVerifier
-import com.example.buryachenko_hw22_arch.present.NavigationActivity
-import com.example.buryachenko_hw22_arch.present.PostUIMapper
-import com.example.buryachenko_hw22_arch.present.ResourceRepository
-import com.example.buryachenko_hw22_arch.present.model.NavigationModel
-import com.example.buryachenko_hw22_arch.present.model.ViewModelFactory
+import com.example.buryachenko_hw22_arch.postsList.data.PostRepository
+import com.example.buryachenko_hw22_arch.postsList.data.api.PostService
+import com.example.buryachenko_hw22_arch.postsList.data.UsersStatusedStorage
+import com.example.buryachenko_hw22_arch.postsList.data.room.PostsDatabase
+import com.example.buryachenko_hw22_arch.postsList.domain.GetPostsUseCase
+import com.example.buryachenko_hw22_arch.postInput.domain.InsertPostUseCase
+import com.example.buryachenko_hw22_arch.postsList.data.mappers.PostMapper
+import com.example.buryachenko_hw22_arch.postsList.domain.PostVerifier
+import com.example.buryachenko_hw22_arch.NavigationActivity
+import com.example.buryachenko_hw22_arch.postsList.data.mappers.PostUIMapper
+import com.example.buryachenko_hw22_arch.postsList.ui.PostsListViewModel
+import com.example.buryachenko_hw22_arch.tools.ResourceRepository
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
@@ -40,6 +40,7 @@ class AppModule(private var context: Context) {
         return Retrofit.Builder()
             .baseUrl("https://jsonplaceholder.typicode.com/")
             .addConverterFactory(gsonConverterFactory)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
 
@@ -51,6 +52,7 @@ class AppModule(private var context: Context) {
         )
     }
 
+
     @Provides
     @Singleton
     fun providePostService(retrofit: Retrofit): PostService {
@@ -60,9 +62,9 @@ class AppModule(private var context: Context) {
     @Provides
     @Singleton
     fun providePostRepository(
-        database: PostsDatabase,
-        postMapper: PostMapper,
-        postService: PostService
+            database: PostsDatabase,
+            postMapper: PostMapper,
+            postService: PostService
     ): PostRepository {
         return PostRepository(database, postService, postMapper)
     }
@@ -87,21 +89,21 @@ class AppModule(private var context: Context) {
     @Provides
     @Singleton
     fun provideViewModelFactory(
-        getPostsUseCase: GetPostsUseCase,
-        insertPostUseCase: InsertPostUseCase
+            getPostsUseCase: GetPostsUseCase,
+            insertPostUseCase: InsertPostUseCase
     ): ViewModelFactory {
         return ViewModelFactory(getPostsUseCase, insertPostUseCase)
     }
 
     @Provides
-    fun provideViewModel(): NavigationModel {
-        return ViewModelProviders.of(context as NavigationActivity).get(NavigationModel::class.java)
+    fun provideViewModel(): PostsListViewModel {
+        return ViewModelProviders.of(context as NavigationActivity).get(PostsListViewModel::class.java)
     }
 
     @Provides
     fun provideGetPostsUseCase(
-        postRepository: PostRepository,
-        postUIMapper: PostUIMapper
+            postRepository: PostRepository,
+            postUIMapper: PostUIMapper
     ): GetPostsUseCase {
         return GetPostsUseCase(postRepository, postUIMapper)
     }
@@ -116,7 +118,7 @@ class AppModule(private var context: Context) {
     }
 
     @Provides
-    fun providePostVerifier(): PostVerifier {
-        return PostVerifier()
+    fun providePostVerifier(resourceRepository: ResourceRepository): PostVerifier {
+        return PostVerifier(resourceRepository)
     }
 }

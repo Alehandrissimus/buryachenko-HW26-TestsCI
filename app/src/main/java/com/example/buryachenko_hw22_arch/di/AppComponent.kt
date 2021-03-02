@@ -1,6 +1,6 @@
 package com.example.buryachenko_hw22_arch.di
 
-import com.example.buryachenko_hw22_arch.present.NavigationActivity
+import com.example.buryachenko_hw22_arch.NavigationActivity
 import dagger.Component
 import javax.inject.Singleton
 

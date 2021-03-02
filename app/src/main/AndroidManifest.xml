@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BuryachenkoHW22Arch"
         android:fullBackupContent="@xml/backup_descriptor">
-        <activity android:name=".present.NavigationActivity">
+        <activity android:name=".NavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

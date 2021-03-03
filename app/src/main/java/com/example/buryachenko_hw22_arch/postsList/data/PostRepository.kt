@@ -69,6 +69,4 @@ class PostRepository @Inject constructor(
         }
         subject.onNext(postMapper.mapping(Result.success(postList)))
     }
-
-
 }

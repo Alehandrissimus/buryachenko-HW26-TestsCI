@@ -1,6 +1,7 @@
 package com.example.buryachenko_hw22_arch.postInput.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.example.buryachenko_hw22_arch.postsList.domain.InputStates
 import com.example.buryachenko_hw22_arch.navigation.BaseFragment
 import com.example.buryachenko_hw22_arch.postsList.ui.PostsListViewModel
 import com.example.buryachenko_hw22_arch.postsList.data.models.PostUIModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 class PostInputFragment : BaseFragment(R.layout.fragment_post_input) {
 
@@ -41,7 +43,7 @@ class PostInputFragment : BaseFragment(R.layout.fragment_post_input) {
 
     private fun setupListeners() {
         binding.postAddButton.setOnClickListener {
-            val status = mViewViewModel.updatePostsList(
+            mViewViewModel.updatePostsList(
                 PostUIModel.StandardPostUIModel(
                     postId = -1,
                     userId = "11",
@@ -52,22 +54,23 @@ class PostInputFragment : BaseFragment(R.layout.fragment_post_input) {
                         R.color.design_default_color_background
                     )
                 )
-            )
-
-            binding.apply {
-                when (status) {
-                    InputStates.SMALL_TITLE -> fragmentInputErrorText.text =
-                        getString(R.string.small_title)
-                    InputStates.SMALL_BODY -> fragmentInputErrorText.text =
-                        getString(R.string.small_body)
-                    InputStates.CONTAINS_BANNED_WORDS -> fragmentInputErrorText.text =
-                        getString(R.string.restricted_words)
-                    InputStates.BIG_TITLE -> fragmentInputErrorText.text =
-                        getString(R.string.big_title)
-                    InputStates.BIG_BODY -> fragmentInputErrorText.text =
-                        getString(R.string.big_body)
-                    InputStates.DECLINED -> fragmentInputErrorText.text = ""
-                    else -> navigator.popBackStack()
+            ).observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                binding.apply {
+                    when (it) {
+                        InputStates.SMALL_TITLE -> fragmentInputErrorText.text =
+                            getString(R.string.small_title)
+                        InputStates.SMALL_BODY -> fragmentInputErrorText.text =
+                            getString(R.string.small_body)
+                        InputStates.CONTAINS_BANNED_WORDS -> fragmentInputErrorText.text =
+                            getString(R.string.restricted_words)
+                        InputStates.BIG_TITLE -> fragmentInputErrorText.text =
+                            getString(R.string.big_title)
+                        InputStates.BIG_BODY -> fragmentInputErrorText.text =
+                            getString(R.string.big_body)
+                        InputStates.DECLINED -> fragmentInputErrorText.text = ""
+                        else -> navigator.popBackStack()
+                    }
                 }
             }
         }

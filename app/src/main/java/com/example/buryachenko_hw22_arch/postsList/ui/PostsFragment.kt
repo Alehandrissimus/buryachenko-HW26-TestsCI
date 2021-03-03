@@ -6,15 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.buryachenko_hw22_arch.R
 import com.example.buryachenko_hw22_arch.databinding.FragmentPostsBinding
 import com.example.buryachenko_hw22_arch.navigation.BaseFragment
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class PostsFragment : BaseFragment(R.layout.fragment_posts) {
 
@@ -64,10 +61,7 @@ class PostsFragment : BaseFragment(R.layout.fragment_posts) {
     private fun observePostsRepo() {
         viewModel.reposLiveData.observe(viewLifecycleOwner, { list ->
             RVadapter.submitList(list)
-            lifecycleScope.launch {
-                delay(10)
-                binding.postsRecycleView.scrollToPosition(0)
-            }
+            binding.postsRecycleView.scrollToPosition(0)
         })
     }
 }

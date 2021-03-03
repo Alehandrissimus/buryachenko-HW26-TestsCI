@@ -13,7 +13,9 @@ import com.example.buryachenko_hw22_arch.postInput.domain.InsertPostUseCase
 import com.example.buryachenko_hw22_arch.postsList.data.mappers.PostMapper
 import com.example.buryachenko_hw22_arch.postsList.domain.PostVerifier
 import com.example.buryachenko_hw22_arch.NavigationActivity
+import com.example.buryachenko_hw22_arch.postsList.data.mappers.PostDbMapper
 import com.example.buryachenko_hw22_arch.postsList.data.mappers.PostUIMapper
+import com.example.buryachenko_hw22_arch.postsList.data.models.Post
 import com.example.buryachenko_hw22_arch.postsList.ui.PostsListViewModel
 import com.example.buryachenko_hw22_arch.tools.ResourceRepository
 import com.google.gson.GsonBuilder
@@ -64,9 +66,15 @@ class AppModule(private var context: Context) {
     fun providePostRepository(
             database: PostsDatabase,
             postMapper: PostMapper,
-            postService: PostService
+            postService: PostService,
+            postDbMapper: PostDbMapper,
     ): PostRepository {
-        return PostRepository(database, postService, postMapper)
+        return PostRepository(database, postService, postMapper, postDbMapper)
+    }
+
+    @Provides
+    fun providePostDbMapper(database: PostsDatabase): PostDbMapper {
+        return PostDbMapper(database)
     }
 
     @Provides
@@ -90,7 +98,7 @@ class AppModule(private var context: Context) {
     @Singleton
     fun provideViewModelFactory(
             getPostsUseCase: GetPostsUseCase,
-            insertPostUseCase: InsertPostUseCase
+            insertPostUseCase: InsertPostUseCase,
     ): ViewModelFactory {
         return ViewModelFactory(getPostsUseCase, insertPostUseCase)
     }
@@ -103,7 +111,7 @@ class AppModule(private var context: Context) {
     @Provides
     fun provideGetPostsUseCase(
             postRepository: PostRepository,
-            postUIMapper: PostUIMapper
+            postUIMapper: PostUIMapper,
     ): GetPostsUseCase {
         return GetPostsUseCase(postRepository, postUIMapper)
     }

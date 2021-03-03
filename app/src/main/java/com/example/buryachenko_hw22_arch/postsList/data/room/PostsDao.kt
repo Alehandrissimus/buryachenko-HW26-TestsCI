@@ -15,6 +15,6 @@ interface PostsDao {
     @Insert
     fun insertPost(post: Post)
 
-    @Query("SELECT COUNT(postId) FROM POSTS")
+    @Query("SELECT MAX(postId) FROM POSTS")
     fun getPostsNumber(): Int
 }

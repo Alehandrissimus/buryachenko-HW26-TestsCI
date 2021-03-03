@@ -21,7 +21,8 @@ class PostVerifier @Inject constructor(
 ) {
     fun verify(post: PostUIModel.StandardPostUIModel): InputStates {
         var contains = false
-        val bannedWordsList = resourceRepository.getString(R.string.banned_words).split(", ").map { it.trim() }
+        val bannedWordsList =
+            resourceRepository.getString(R.string.banned_words).split(", ").map { it.trim() }
 
         bannedWordsList.forEach {
             if (post.title.contains(it, true)) {

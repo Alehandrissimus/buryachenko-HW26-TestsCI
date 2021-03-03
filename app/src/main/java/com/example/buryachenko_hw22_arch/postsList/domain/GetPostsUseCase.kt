@@ -8,10 +8,11 @@ import io.reactivex.Observable
 import javax.inject.Inject
 
 class GetPostsUseCase @Inject constructor(
-        private val postRepository: PostRepository,
-        private val postUIMapper: PostUIMapper,
+    private val postRepository: PostRepository,
+    private val postUIMapper: PostUIMapper,
 ) {
     operator fun invoke(): Observable<Result<List<PostUIModel>, String>> {
-        return postRepository.getInfo().map { postUIMapper.map(it) }
+        return postRepository.subscribeForInfo()
+            .map { postUIMapper.map(it) }
     }
 }

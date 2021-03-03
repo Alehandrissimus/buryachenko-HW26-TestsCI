@@ -1,6 +1,5 @@
 package com.example.buryachenko_hw22_arch.postsList.data.mappers
 
-import com.example.buryachenko_hw22_arch.postsList.data.PostErrors
 import com.example.buryachenko_hw22_arch.postsList.data.UsersStatusedStorage
 import com.example.buryachenko_hw22_arch.postsList.data.models.Post
 import com.example.buryachenko_hw22_arch.postsList.data.models.PostModel
@@ -11,7 +10,7 @@ import javax.inject.Inject
 class PostMapper @Inject constructor(
     private val usersStatusedStorage: UsersStatusedStorage
 ) {
-    fun mapping(postResult: Result<List<Post>, PostErrors>): Result<List<PostModel>, String> {
+    fun mapping(postResult: Result<List<Post>, String>): Result<List<PostModel>, String> {
         return postResult.mapSuccess { postsList ->
             postsList.map { post ->
                 val userStatused = usersStatusedStorage.getList().find { it.userId == post.userId }
@@ -49,7 +48,7 @@ class PostMapper @Inject constructor(
                 }
             }
         }.mapError { errors ->
-            "$errors"
+            errors
         }
     }
 }

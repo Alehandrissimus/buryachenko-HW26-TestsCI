@@ -61,6 +61,7 @@ class PostsFragment : BaseFragment(R.layout.fragment_posts) {
     private fun observePostsRepo() {
         viewModel.reposLiveData.observe(viewLifecycleOwner, { list ->
             RVadapter.submitList(list)
+            Thread.sleep(40)
             binding.postsRecycleView.scrollToPosition(0)
         })
     }

@@ -9,7 +9,7 @@ import javax.inject.Inject
 class PostDbMapper @Inject constructor(
     private val database: PostsDatabase
 ) {
-    fun map(post: PostUIModel.StandardPostUIModel): Post {
+    suspend fun map(post: PostUIModel.StandardPostUIModel): Post {
         return Post(
             postId = database.postsDao().getPostsNumber() + 1,
             userId = post.userId.toInt(),

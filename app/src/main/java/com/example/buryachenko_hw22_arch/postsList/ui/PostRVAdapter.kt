@@ -1,5 +1,6 @@
 package com.example.buryachenko_hw22_arch.postsList.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

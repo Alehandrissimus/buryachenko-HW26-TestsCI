@@ -14,7 +14,6 @@ import com.example.buryachenko_hw22_arch.postsList.domain.InputStates
 import com.example.buryachenko_hw22_arch.navigation.BaseFragment
 import com.example.buryachenko_hw22_arch.postsList.ui.PostsListViewModel
 import com.example.buryachenko_hw22_arch.postsList.data.models.PostUIModel
-import io.reactivex.android.schedulers.AndroidSchedulers
 
 class PostInputFragment : BaseFragment(R.layout.fragment_post_input) {
 
@@ -39,11 +38,34 @@ class PostInputFragment : BaseFragment(R.layout.fragment_post_input) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
+        observeCallback()
+    }
+
+    private fun observeCallback() {
+        mViewViewModel.inputLiveData.observe(viewLifecycleOwner, { state ->
+            Log.d("TAG", "input state ${state}")
+            binding.apply {
+                when (state) {
+                    InputStates.SMALL_TITLE -> fragmentInputErrorText.text =
+                            getString(R.string.small_title)
+                    InputStates.SMALL_BODY -> fragmentInputErrorText.text =
+                            getString(R.string.small_body)
+                    InputStates.CONTAINS_BANNED_WORDS -> fragmentInputErrorText.text =
+                            getString(R.string.restricted_words)
+                    InputStates.BIG_TITLE -> fragmentInputErrorText.text =
+                            getString(R.string.big_title)
+                    InputStates.BIG_BODY -> fragmentInputErrorText.text =
+                            getString(R.string.big_body)
+                    InputStates.DECLINED -> fragmentInputErrorText.text = ""
+                    else -> navigator.popBackStack()
+                }
+            }
+        })
     }
 
     private fun setupListeners() {
         binding.postAddButton.setOnClickListener {
-            mViewViewModel.updatePostsList(
+            mViewViewModel.updatePostsListAsync(
                 PostUIModel.StandardPostUIModel(
                     postId = -1,
                     userId = "11",
@@ -54,25 +76,7 @@ class PostInputFragment : BaseFragment(R.layout.fragment_post_input) {
                         R.color.design_default_color_background
                     )
                 )
-            ).observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                binding.apply {
-                    when (it) {
-                        InputStates.SMALL_TITLE -> fragmentInputErrorText.text =
-                            getString(R.string.small_title)
-                        InputStates.SMALL_BODY -> fragmentInputErrorText.text =
-                            getString(R.string.small_body)
-                        InputStates.CONTAINS_BANNED_WORDS -> fragmentInputErrorText.text =
-                            getString(R.string.restricted_words)
-                        InputStates.BIG_TITLE -> fragmentInputErrorText.text =
-                            getString(R.string.big_title)
-                        InputStates.BIG_BODY -> fragmentInputErrorText.text =
-                            getString(R.string.big_body)
-                        InputStates.DECLINED -> fragmentInputErrorText.text = ""
-                        else -> navigator.popBackStack()
-                    }
-                }
-            }
+            )
         }
         binding.postCancelButton.setOnClickListener {
             navigator.popBackStack()

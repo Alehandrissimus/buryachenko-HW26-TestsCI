@@ -15,14 +15,12 @@ import com.example.buryachenko_hw22_arch.postsList.domain.PostVerifier
 import com.example.buryachenko_hw22_arch.NavigationActivity
 import com.example.buryachenko_hw22_arch.postsList.data.mappers.PostDbMapper
 import com.example.buryachenko_hw22_arch.postsList.data.mappers.PostUIMapper
-import com.example.buryachenko_hw22_arch.postsList.data.models.Post
 import com.example.buryachenko_hw22_arch.postsList.ui.PostsListViewModel
 import com.example.buryachenko_hw22_arch.tools.ResourceRepository
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
@@ -40,17 +38,16 @@ class AppModule(private var context: Context) {
     @Singleton
     fun provideRetrofit(gsonConverterFactory: GsonConverterFactory): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://jsonplaceholder.typicode.com/")
-            .addConverterFactory(gsonConverterFactory)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
+                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .addConverterFactory(gsonConverterFactory)
+                .build()
     }
 
     @Provides
     @Singleton
     fun provideGsonConverterFactory(): GsonConverterFactory {
         return GsonConverterFactory.create(
-            GsonBuilder().setLenient().create()
+                GsonBuilder().setLenient().create()
         )
     }
 
@@ -69,7 +66,7 @@ class AppModule(private var context: Context) {
             postService: PostService,
             postDbMapper: PostDbMapper,
     ): PostRepository {
-        return PostRepository(database, postService, postMapper, postDbMapper)
+        return PostRepository(database, postService, postMapper)
     }
 
     @Provides
@@ -98,7 +95,7 @@ class AppModule(private var context: Context) {
     @Singleton
     fun provideViewModelFactory(
             getPostsUseCase: GetPostsUseCase,
-            insertPostUseCase: InsertPostUseCase,
+            insertPostUseCase: InsertPostUseCase
     ): ViewModelFactory {
         return ViewModelFactory(getPostsUseCase, insertPostUseCase)
     }
@@ -120,8 +117,8 @@ class AppModule(private var context: Context) {
     @Singleton
     fun provideDatabase(): PostsDatabase {
         return Room.databaseBuilder(
-            context,
-            PostsDatabase::class.java, "database"
+                context,
+                PostsDatabase::class.java, "database"
         ).build()
     }
 

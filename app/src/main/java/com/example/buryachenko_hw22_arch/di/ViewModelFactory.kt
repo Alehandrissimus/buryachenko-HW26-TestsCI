@@ -8,12 +8,13 @@ import com.example.buryachenko_hw22_arch.postsList.data.PostRepository
 import com.example.buryachenko_hw22_arch.postsList.data.mappers.PostMapper
 import com.example.buryachenko_hw22_arch.postsList.data.mappers.PostUIMapper
 import com.example.buryachenko_hw22_arch.postsList.ui.PostsListViewModel
+import com.example.buryachenko_hw22_arch.tools.ResourceRepository
 import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory @Inject constructor(
         private val getPostsUseCase: GetPostsUseCase,
-        private val insertPostUseCase: InsertPostUseCase,
+        private val insertPostUseCase: InsertPostUseCase
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

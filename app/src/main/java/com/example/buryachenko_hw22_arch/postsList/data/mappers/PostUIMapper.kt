@@ -1,5 +1,6 @@
 package com.example.buryachenko_hw22_arch.postsList.data.mappers
 
+import android.util.Log
 import com.example.buryachenko_hw22_arch.R
 import com.example.buryachenko_hw22_arch.postsList.data.models.PostModel
 import com.example.buryachenko_hw22_arch.postsList.data.models.PostUIModel
@@ -11,6 +12,7 @@ class PostUIMapper @Inject constructor(
     private val resourceRepository: ResourceRepository
 ) {
     fun map(postResult: Result<List<PostModel>, String>): Result<List<PostUIModel>, String> {
+        Log.d("TAG", "toUImAPPER")
         return postResult.mapSuccess { postModelList ->
             postModelList.map { postModel ->
                 when (postModel) {

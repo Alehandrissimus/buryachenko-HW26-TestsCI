@@ -1,5 +1,6 @@
 package com.example.buryachenko_hw22_arch.postsList.data.mappers
 
+import android.util.Log
 import com.example.buryachenko_hw22_arch.postsList.data.UsersStatusedStorage
 import com.example.buryachenko_hw22_arch.postsList.data.models.Post
 import com.example.buryachenko_hw22_arch.postsList.data.models.PostModel

@@ -31,9 +31,6 @@ class PostVerifier @Inject constructor(
         }
 
         return when {
-            contains -> {
-                InputStates.CONTAINS_BANNED_WORDS
-            }
             post.title.length < 3 -> {
                 InputStates.SMALL_TITLE
             }
@@ -45,6 +42,9 @@ class PostVerifier @Inject constructor(
             }
             post.body.length > 500 -> {
                 InputStates.BIG_BODY
+            }
+            contains -> {
+                InputStates.CONTAINS_BANNED_WORDS
             }
             else -> {
                 InputStates.ACCEPTED

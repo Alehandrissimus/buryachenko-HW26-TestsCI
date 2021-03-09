@@ -12,7 +12,6 @@ class PostUIMapper @Inject constructor(
     private val resourceRepository: ResourceRepository
 ) {
     fun map(postResult: Result<List<PostModel>, String>): Result<List<PostUIModel>, String> {
-        Log.d("TAG", "toUImAPPER")
         return postResult.mapSuccess { postModelList ->
             postModelList.map { postModel ->
                 when (postModel) {

@@ -1,5 +1,6 @@
 package com.example.buryachenko_hw22_arch.postInput.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,16 +9,20 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import com.example.buryachenko_hw22_arch.AppApplication
 import com.example.buryachenko_hw22_arch.R
 import com.example.buryachenko_hw22_arch.databinding.FragmentPostInputBinding
 import com.example.buryachenko_hw22_arch.postsList.domain.InputStates
 import com.example.buryachenko_hw22_arch.navigation.BaseFragment
 import com.example.buryachenko_hw22_arch.postsList.ui.PostsListViewModel
 import com.example.buryachenko_hw22_arch.postsList.data.models.PostUIModel
+import javax.inject.Inject
 
 class PostInputFragment : BaseFragment(R.layout.fragment_post_input) {
 
-    private val mViewViewModel: PostsListViewModel by activityViewModels()
+    @Inject
+    lateinit var postInputViewModel: PostInputViewModel
+
     private lateinit var binding: FragmentPostInputBinding
 
     companion object {
@@ -35,6 +40,11 @@ class PostInputFragment : BaseFragment(R.layout.fragment_post_input) {
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (context.applicationContext as AppApplication).appComponent.inject(this)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
@@ -42,8 +52,7 @@ class PostInputFragment : BaseFragment(R.layout.fragment_post_input) {
     }
 
     private fun observeCallback() {
-        mViewViewModel.inputLiveData.observe(viewLifecycleOwner, { state ->
-            Log.d("TAG", "input state ${state}")
+        postInputViewModel.inputLiveData.observe(viewLifecycleOwner, { state ->
             binding.apply {
                 when (state) {
                     InputStates.SMALL_TITLE -> fragmentInputErrorText.text =
@@ -56,16 +65,17 @@ class PostInputFragment : BaseFragment(R.layout.fragment_post_input) {
                             getString(R.string.big_title)
                     InputStates.BIG_BODY -> fragmentInputErrorText.text =
                             getString(R.string.big_body)
-                    InputStates.DECLINED -> fragmentInputErrorText.text = ""
+                    InputStates.DECLINED -> {}
                     else -> navigator.popBackStack()
                 }
             }
+            postInputViewModel.cleanLiveData()
         })
     }
 
     private fun setupListeners() {
         binding.postAddButton.setOnClickListener {
-            mViewViewModel.updatePostsListAsync(
+            postInputViewModel.updatePostsListAsync(
                 PostUIModel.StandardPostUIModel(
                     postId = -1,
                     userId = "11",

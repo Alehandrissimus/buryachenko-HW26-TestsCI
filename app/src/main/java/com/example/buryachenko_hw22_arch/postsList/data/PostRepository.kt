@@ -17,16 +17,11 @@ class PostRepository @Inject constructor(
     private val postMapper: PostMapper,
 ) {
 
-    private suspend fun loadBackPosts() {
-        try {
-            database.postsDao().insertPosts(postService.getPosts())
-        } catch (e: Exception) {
-            Log.d("TAG", e.toString())
-        }
+    suspend fun loadBackPosts() {
+        database.postsDao().insertPosts(postService.getPosts())
     }
 
-    suspend fun subscribeForInfo(): Flow<Result<List<PostModel>, String>> {
-        loadBackPosts()
+    fun subscribeForInfo(): Flow<Result<List<PostModel>, String>> {
         return database.postsDao().getAllPosts()
             .map { it.sortedBy { it.isCreatedByUser }.asReversed() }
             .map { postMapper.mapping(Result.success(it)) }

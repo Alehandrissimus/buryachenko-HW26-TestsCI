@@ -5,32 +5,35 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.buryachenko_hw22_arch.postInput.domain.InsertPostUseCase
+import com.example.buryachenko_hw22_arch.postsList.data.PostRepository
 import com.example.buryachenko_hw22_arch.postsList.data.models.PostUIModel
 import com.example.buryachenko_hw22_arch.postsList.domain.GetPostsUseCase
-import com.example.buryachenko_hw22_arch.postsList.domain.InputStates
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class PostsListViewModel @Inject constructor(
-        private val getPostsUseCase: GetPostsUseCase,
-        private val insertPostUseCase: InsertPostUseCase
+    private val getPostsUseCase: GetPostsUseCase,
+    private val postRepository: PostRepository,
 ) : ViewModel() {
 
     private val _reposLiveData = MutableLiveData<List<PostUIModel>>()
     val reposLiveData: LiveData<List<PostUIModel>> = _reposLiveData
 
-    private val _inputLiveData = MutableLiveData<InputStates>()
-    val inputLiveData: LiveData<InputStates> = _inputLiveData
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String> = _errorLiveData
 
+    private val postsScope = CoroutineScope(
+        SupervisorJob() +
+                CoroutineExceptionHandler { _, throwable ->
+        _errorLiveData.postValue("Error: $throwable")
+    })
 
-    fun getPostsList() {
-        viewModelScope.launch {
+    fun subscribeOnDatabase() {
+        postsScope.launch {
+            postRepository.loadBackPosts()
+        }
+        postsScope.launch {
             val flow = getPostsUseCase.invoke().distinctUntilChanged()
             flow.collect {
                 _reposLiveData.postValue(it.successResult)
@@ -38,13 +41,8 @@ class PostsListViewModel @Inject constructor(
         }
     }
 
-    fun updatePostsListAsync(post: PostUIModel.StandardPostUIModel) {
-        viewModelScope.launch {
-            val state = insertPostUseCase.invoke(post)
-            _inputLiveData.postValue(state)
-            delay(30)
-            _inputLiveData.postValue(InputStates.DECLINED)
-        }
+    override fun onCleared() {
+        super.onCleared()
+        postsScope.cancel()
     }
-
 }

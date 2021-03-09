@@ -64,7 +64,6 @@ class AppModule(private var context: Context) {
             database: PostsDatabase,
             postMapper: PostMapper,
             postService: PostService,
-            postDbMapper: PostDbMapper,
     ): PostRepository {
         return PostRepository(database, postService, postMapper)
     }
@@ -89,20 +88,6 @@ class AppModule(private var context: Context) {
     @Singleton
     fun provideResourceRepository(context: Context): ResourceRepository {
         return ResourceRepository(context)
-    }
-
-    @Provides
-    @Singleton
-    fun provideViewModelFactory(
-            getPostsUseCase: GetPostsUseCase,
-            insertPostUseCase: InsertPostUseCase
-    ): ViewModelFactory {
-        return ViewModelFactory(getPostsUseCase, insertPostUseCase)
-    }
-
-    @Provides
-    fun provideViewModel(): PostsListViewModel {
-        return ViewModelProviders.of(context as NavigationActivity).get(PostsListViewModel::class.java)
     }
 
     @Provides

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="model"
-            type="com.example.buryachenko_hw22_arch.postsList.data.models.PostUIModel.StandardPostUIModel" />
+            type="com.example.buryachenko_hw_22arch.postsList.data.models.PostUIModel.StandardPostUIModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -16,10 +16,9 @@ jobs:
 
       - name: Running unit tests
         run: ./gradlew app:test
-
   linter:
     runs-on: ubuntu-latest
-      steps:
+    steps:
       - uses: actions/checkout@v2
 
       - name: Run detekt

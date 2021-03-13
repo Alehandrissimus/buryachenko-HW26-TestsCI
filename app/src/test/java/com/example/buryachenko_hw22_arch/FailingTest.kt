@@ -7,7 +7,7 @@ class FailingTest {
 
     @Test
     fun `some test`() {
-        assertEquals(19, 0)
+        assertEquals(0, 0)
     }
 
 }

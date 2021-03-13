@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.buryachenko_hw22_arch">
+    package="com.example.buryachenko_hw_22arch">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -10,9 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BuryachenkoHW22Arch"
-        android:name=".AppApplication"
+        android:name="com.example.buryachenko_hw_22arch.AppApplication"
         android:fullBackupContent="@xml/backup_descriptor">
-        <activity android:name=".NavigationActivity">
+        <activity android:name="com.example.buryachenko_hw_22arch.NavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

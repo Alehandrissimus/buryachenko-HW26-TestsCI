@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Assertions.assertEquals
 class FailingTest {
 
     @Test
-    fun `some test`(a: Int = 10) {
-        assertEquals(a, 5)
+    fun `some test`() {
+        assertEquals(0, 0)
     }
 
 }

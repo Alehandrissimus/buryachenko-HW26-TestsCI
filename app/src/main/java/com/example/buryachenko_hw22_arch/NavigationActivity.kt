@@ -6,6 +6,7 @@ import com.example.buryachenko_hw22_arch.navigation.Navigator
 
 class NavigationActivity : AppCompatActivity() {
 
+
     val navigator by lazy { Navigator(supportFragmentManager, R.id.container) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

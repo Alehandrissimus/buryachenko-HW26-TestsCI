@@ -10,5 +10,4 @@ class FailingTest {
         assertEquals(a, 5)
     }
 
-
 }

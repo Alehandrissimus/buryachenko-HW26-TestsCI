@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 class FailingTest {
 
     @Test
-    fun `some test`(a: Int = 10) {
+    fun `some test`() {
         assertEquals(19, 0)
     }
 

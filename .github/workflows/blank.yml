@@ -15,3 +15,6 @@ jobs:
 
       - name: Run a one-line script
         run: echo Hello, world!
+
+      - name: Running tests
+        run: ./gradlew app:tests

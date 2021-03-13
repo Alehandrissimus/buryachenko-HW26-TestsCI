@@ -1,9 +1,8 @@
-name: CI
+name: CImain
 
 on:
   pull_request:
     branches: [ Tests+CI ]
-
   workflow_dispatch:
 
 jobs:
@@ -13,14 +12,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Running tests
-          run: ./gradlew app:tests
+      - name: Running unit tests
+        run: ./gradlew app:test

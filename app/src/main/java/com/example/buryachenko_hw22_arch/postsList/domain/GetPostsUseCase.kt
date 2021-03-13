@@ -12,7 +12,7 @@ class GetPostsUseCase @Inject constructor(
         private val postRepository: PostRepository,
         private val postUIMapper: PostUIMapper,
 ) {
-    suspend operator fun invoke(): Flow<Result<List<PostUIModel>, String>> {
+    operator fun invoke(): Flow<Result<List<PostUIModel>, String>> {
         return postRepository.subscribeForInfo()
                 .map { postUIMapper.map(it) }
     }

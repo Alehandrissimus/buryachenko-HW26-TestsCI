@@ -6,7 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.example.buryachenko_hw_22arch.postsList.data.PostRepository
 import com.example.buryachenko_hw_22arch.postsList.data.models.PostUIModel
 import com.example.buryachenko_hw_22arch.postsList.domain.GetPostsUseCase
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject

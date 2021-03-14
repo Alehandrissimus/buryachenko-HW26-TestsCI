@@ -33,7 +33,7 @@ class PostMapper @Inject constructor(
                                 userId = post.userId.toString()
                             )
                         }
-                        else -> throw IllegalArgumentException()
+                        else -> throw IllegalArgumentException("Catched Illegal argument while PostMapping")
                     }
 
                 } else {

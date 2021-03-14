@@ -27,7 +27,6 @@ class PostRVAdapter : ListAdapter<PostUIModel, RecyclerView.ViewHolder>(PostRVDi
         return when (getItem(position)) {
             is PostUIModel.StandardPostUIModel -> ViewType.STANDARD
             is PostUIModel.BannedPostUIModel -> ViewType.BANNED
-            else -> throw IllegalArgumentException()
         }.ordinal
     }
 

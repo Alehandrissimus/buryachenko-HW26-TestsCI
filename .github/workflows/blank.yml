@@ -26,3 +26,12 @@ jobs:
 
       - name: Run detekt
         run: ./gradlew app:detekt
+
+  codecov:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: codecov/codecov-action@v1
+        with:
+          name: codecov
+          fail_ci_if_error: false

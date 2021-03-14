@@ -13,8 +13,8 @@ class UsersStatusedStorage private constructor() {
 
     fun getList(): MutableSet<UserStatused> = users
 
+    @Suppress("MagicNumber")
     private fun setup(): MutableSet<UserStatused> {
-
         return mutableSetOf(
             UserStatused(3, UserStatus.WARNING),
             UserStatused(4, UserStatus.WARNING),

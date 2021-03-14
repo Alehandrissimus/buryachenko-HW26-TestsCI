@@ -19,6 +19,8 @@ enum class InputStates {
 class PostVerifier @Inject constructor(
     private val resourceRepository: ResourceRepository
 ) {
+
+    @Suppress("MagicNumber")
     fun verify(post: PostUIModel.StandardPostUIModel): InputStates {
         var contains = false
         val bannedWordsList =

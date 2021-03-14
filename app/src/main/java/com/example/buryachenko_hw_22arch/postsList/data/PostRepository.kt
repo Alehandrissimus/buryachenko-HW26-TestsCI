@@ -22,7 +22,7 @@ class PostRepository @Inject constructor(
 
     fun subscribeForInfo(): Flow<Result<List<PostModel>, String>> {
         return database.postsDao().getAllPosts()
-            .map { it.sortedBy { it.isCreatedByUser }.asReversed() }
+            .map { it.sortedWith(compareBy({ !it.isCreatedByUser }, { it.isCreatedByUser })) }
             .map { postMapper.mapping(Result.success(it)) }
     }
 

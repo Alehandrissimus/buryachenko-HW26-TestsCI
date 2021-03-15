@@ -1,80 +1,136 @@
 package com.example.buryachenko_hw_22arch.postsList.data.mappers
 
 import android.content.Context
-import androidx.room.Room
-import com.example.buryachenko_hw_22arch.postsList.data.models.Post
-import com.example.buryachenko_hw_22arch.postsList.data.room.PostsDatabase
+import com.example.buryachenko_hw_22arch.R
+import com.example.buryachenko_hw_22arch.postsList.data.models.PostModel
+import com.example.buryachenko_hw_22arch.postsList.data.models.PostUIModel
+import com.example.buryachenko_hw_22arch.tools.ResourceRepository
+import com.example.buryachenko_hw_22arch.tools.Result
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineScope
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 
-
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class PostUIMapperTest {
 
-    private lateinit var db: PostsDatabase
-
-    @BeforeAll
-    fun setup() {
-        db = Room.inMemoryDatabaseBuilder(
-            mockk<Context>(),
-            PostsDatabase::class.java
-        ).build()
-
-    }
-
-    @AfterAll
-    fun closeDb() {
-        db.close()
-    }
-
-    @ExperimentalCoroutinesApi
     @Test
-    fun `database inserting post works correctly`() {
-        val scope = TestCoroutineScope()
-        val post = Post(
-            postId = 1,
-            title = "title",
-            body = "bodyyy",
-            userId = 1,
-            isCreatedByUser = false,
+    fun `PostUIMapper Standard model mapping works correctly`() {
+        val resourceRepository = ResourceRepository(mockk<Context>(relaxed = true))
+        val postUIMapper = PostUIMapper(resourceRepository)
+        val post = Result.success<List<PostModel>, String>(
+            listOf(
+                PostModel.StandardUserPostModel(
+                    title = "title",
+                    body = "bodyt",
+                    postId = 1,
+                    userId = "1",
+                    hasWarning = false
+                )
+            )
         )
-        scope.launch {
-            db.postsDao().insertPost(post)
-
-            val result = db.postsDao().getAll()
-            assert(result[0] == post)
-        }
-    }
-
-    @ExperimentalCoroutinesApi
-    @Test
-    fun `rgrgg`() = runBlocking {
-        val post = Post(
-            postId = 1,
-            title = "title",
-            body = "bodyyy",
-            userId = 1,
-            isCreatedByUser = false,
+        val expectedResult = Result.success<List<PostUIModel>, String>(
+            listOf(
+                PostUIModel.StandardPostUIModel(
+                    title = "title",
+                    body = "bodyt",
+                    postId = 1,
+                    userId = "1",
+                    backgroundColor = resourceRepository.getColor(R.color.design_default_color_background)
+                )
+            )
         )
 
-        db.postsDao().insertPost(post)
-
-        val result = db.postsDao().getAll()
-        assert(result[0] == post)
+        val actualResult = postUIMapper.map(post)
+        assert(actualResult.successResult == expectedResult.successResult)
     }
 
-    @ExperimentalCoroutinesApi
     @Test
-    fun `ggrggrgrg`() = runBlocking {
-        val a = db.postsDao().getPostsNumber()
-        assertEquals(2, a)
+    fun `PostUIMapper Standard model mapping works correctly2`() {
+        val resourceRepository = ResourceRepository(mockk<Context>(relaxed = true))
+        val postUIMapper = PostUIMapper(resourceRepository)
+        val post = Result.success<List<PostModel>, String>(
+            listOf(
+                PostModel.StandardUserPostModel(
+                    title = "title",
+                    body = "bodyt",
+                    postId = 1,
+                    userId = "1",
+                    hasWarning = false
+                )
+            )
+        )
+        val expectedResult = Result.success<List<PostUIModel>, String>(
+            listOf(
+                PostUIModel.StandardPostUIModel(
+                    title = "titl1",
+                    body = "bodyt",
+                    postId = 1,
+                    userId = "2",
+                    backgroundColor = resourceRepository.getColor(R.color.yellow)
+                )
+            )
+        )
+
+        val actualResult = postUIMapper.map(post)
+        assert(actualResult.successResult != expectedResult.successResult)
+    }
+
+    @Test
+    fun `PostUIMapper Banned model mapping works correctly`() {
+        val resourceRepository = ResourceRepository(mockk<Context>(relaxed = true))
+        val postUIMapper = PostUIMapper(resourceRepository)
+        val post = Result.success<List<PostModel>, String>(
+            listOf(
+                PostModel.BannedUserPostModel(
+                    userId = "1",
+                    postId = 4,
+                )
+            )
+        )
+        val expectedResult = Result.success<List<PostUIModel>, String>(
+            listOf(
+                PostUIModel.BannedPostUIModel(
+                    userId = "",
+                    postId = 4,
+                )
+            )
+        )
+
+        val actualResult = postUIMapper.map(post)
+        assert(actualResult.successResult == expectedResult.successResult)
+    }
+
+    @Test
+    fun `PostUIMapper Banned model mapping works correctly2`() {
+        val resourceRepository = ResourceRepository(mockk<Context>(relaxed = true))
+        val postUIMapper = PostUIMapper(resourceRepository)
+        val post = Result.success<List<PostModel>, String>(
+            listOf(
+                PostModel.BannedUserPostModel(
+                    userId = "3",
+                    postId = 4,
+                )
+            )
+        )
+        val expectedResult = Result.success<List<PostUIModel>, String>(
+            listOf(
+                PostUIModel.BannedPostUIModel(
+                    userId = "1",
+                    postId = 2,
+                )
+            )
+        )
+
+        val actualResult = postUIMapper.map(post)
+        assert(actualResult.successResult != expectedResult.successResult)
+    }
+
+    @Test
+    fun `PostUIMapper error mapping works correctly`() {
+        val resourceRepository = ResourceRepository(mockk<Context>(relaxed = true))
+        val postUIMapper = PostUIMapper(resourceRepository)
+        val post = Result.error<List<PostModel>, String>("Some error")
+
+        val expectedResult = Result.error<List<PostUIModel>, String>("")
+        val actualResult = postUIMapper.map(post)
+        assert(actualResult.errorResult == expectedResult.errorResult)
     }
 }

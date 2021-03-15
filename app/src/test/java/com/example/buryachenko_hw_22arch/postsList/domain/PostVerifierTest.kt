@@ -1,25 +1,23 @@
-package com.example.buryachenko_hw_22arch
+package com.example.buryachenko_hw_22arch.postsList.domain
 
 import android.content.Context
+import com.example.buryachenko_hw_22arch.R
 import com.example.buryachenko_hw_22arch.postsList.data.models.PostUIModel
-import com.example.buryachenko_hw_22arch.postsList.domain.InputStates
-import com.example.buryachenko_hw_22arch.postsList.domain.PostVerifier
 import com.example.buryachenko_hw_22arch.tools.ResourceRepository
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
 
-class PostVerifierTest {
-
+internal class PostVerifierTest {
     @Test
     fun `post verifier small_title works correctly`() {
         val resourceRepository = ResourceRepository(mockk<Context>(relaxed = true))
         val postVerifier = PostVerifier(resourceRepository)
         val post = PostUIModel.StandardPostUIModel(
-                postId = 1,
-                title = "1",
-                body = "1",
-                userId = "11",
-                backgroundColor = R.color.design_default_color_background
+            postId = 1,
+            title = "1",
+            body = "1",
+            userId = "11",
+            backgroundColor = R.color.design_default_color_background
         )
 
         val actualResult = postVerifier.verify(post)
@@ -33,11 +31,11 @@ class PostVerifierTest {
         val resourceRepository = ResourceRepository(mockk<Context>(relaxed = true))
         val postVerifier = PostVerifier(resourceRepository)
         val post = PostUIModel.StandardPostUIModel(
-                postId = 1,
-                title = "gggg1",
-                body = "1",
-                userId = "11",
-                backgroundColor = R.color.design_default_color_background
+            postId = 1,
+            title = "gggg1",
+            body = "1",
+            userId = "11",
+            backgroundColor = R.color.design_default_color_background
         )
 
         val actualResult = postVerifier.verify(post)
@@ -51,11 +49,11 @@ class PostVerifierTest {
         val resourceRepository = ResourceRepository(mockk<Context>(relaxed = true))
         val postVerifier = PostVerifier(resourceRepository)
         val post = PostUIModel.StandardPostUIModel(
-                postId = 1,
-                title = "sadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasd",
-                body = "111111",
-                userId = "11",
-                backgroundColor = R.color.design_default_color_background
+            postId = 1,
+            title = "sadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasd",
+            body = "111111",
+            userId = "11",
+            backgroundColor = R.color.design_default_color_background
         )
 
         val actualResult = postVerifier.verify(post)
@@ -69,11 +67,11 @@ class PostVerifierTest {
         val resourceRepository = ResourceRepository(mockk<Context>(relaxed = true))
         val postVerifier = PostVerifier(resourceRepository)
         val post = PostUIModel.StandardPostUIModel(
-                postId = 1,
-                title = "1111",
-                body = "sadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasd",
-                userId = "11",
-                backgroundColor = R.color.design_default_color_background
+            postId = 1,
+            title = "1111",
+            body = "sadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasdsadasdsdasdsdasdasd",
+            userId = "11",
+            backgroundColor = R.color.design_default_color_background
         )
 
         val actualResult = postVerifier.verify(post)
@@ -87,11 +85,11 @@ class PostVerifierTest {
         val resourceRepository = ResourceRepository(mockk<Context>(relaxed = true))
         val postVerifier = PostVerifier(resourceRepository)
         val post = PostUIModel.StandardPostUIModel(
-                postId = 1,
-                title = "КуПлЮ ГаРаж",
-                body = "fsfdfdsf",
-                userId = "11",
-                backgroundColor = R.color.design_default_color_background
+            postId = 1,
+            title = "КуПлЮ ГаРаж",
+            body = "fsfdfdsf",
+            userId = "11",
+            backgroundColor = R.color.design_default_color_background
         )
 
         val actualResult = postVerifier.verify(post)

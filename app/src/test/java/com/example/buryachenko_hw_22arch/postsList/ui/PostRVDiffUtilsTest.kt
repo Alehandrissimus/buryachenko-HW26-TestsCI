@@ -33,7 +33,7 @@ internal class PostRVDiffUtilsTest {
         assertAll("Group",
             { assert(diffUtils.areItemsTheSame(standardPost1, standardPost1)) },
             { assert(diffUtils.areItemsTheSame(bannedPost1, bannedPost1)) },
-            { assert(!diffUtils.areItemsTheSame(standardPost1, bannedPost1)) },
+            { assert(diffUtils.areItemsTheSame(standardPost1, bannedPost1)) },
             { assert(!diffUtils.areItemsTheSame(standardPost1, standardPost2)) },
         )
     }
